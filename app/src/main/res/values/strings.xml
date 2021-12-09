@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sales Cashier</string>
+    <string name="app_name">Point Of Sales</string>
     <string name="product">Produk</string>
     <string name="transaction">Transaksi</string>
     <string name="report">Laporan</string>
