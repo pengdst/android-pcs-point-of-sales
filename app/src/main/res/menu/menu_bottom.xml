@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/fragmentProduct"
+        android:icon="@drawable/ic_product"
+        app:showAsAction="ifRoom"
+        android:title="@string/product" />
+
+    <item
+        android:id="@+id/fragmentTransaction"
+        android:icon="@drawable/ic_transaction"
+        app:showAsAction="ifRoom"
+        android:title="@string/transaction" />
+
+    <item
+        android:id="@+id/fragmentReport"
+        android:icon="@drawable/ic_report"
+        app:showAsAction="ifRoom"
+        android:title="@string/report" />
+
+    <item
+        android:id="@+id/fragmentAbout"
+        android:icon="@drawable/ic_about"
+        app:showAsAction="ifRoom"
+        android:title="@string/about" />
+
+</menu>
