@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Sales Cashier</string>
+    <string name="product">Produk</string>
+    <string name="transaction">Transaksi</string>
+    <string name="report">Laporan</string>
+    <string name="about">About</string>
 </resources>
