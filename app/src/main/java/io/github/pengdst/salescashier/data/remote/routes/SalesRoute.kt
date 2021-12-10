@@ -1,6 +1,6 @@
 package io.github.pengdst.salescashier.data.remote.routes
 
-import io.github.pengdst.salescashier.data.remote.responses.AuthData
+import io.github.pengdst.salescashier.data.remote.models.AuthData
 import io.github.pengdst.salescashier.data.remote.responses.SalesResponse
 import retrofit2.Response
 import retrofit2.http.Field

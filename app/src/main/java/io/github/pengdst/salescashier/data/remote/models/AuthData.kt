@@ -1,4 +1,4 @@
-package io.github.pengdst.salescashier.data.remote.responses
+package io.github.pengdst.salescashier.data.remote.models
 
 
 import com.google.gson.annotations.SerializedName
