@@ -5,6 +5,8 @@ import io.github.pengdst.salescashier.data.remote.models.Admin
 
 class Session(private val sessionHelper: SessionHelper) {
 
+    val token get() = sessionHelper.getString(AuthConst.KEY_AUTH_TOKEN)
+
     fun isLogin() = !sessionHelper.getString(AuthConst.KEY_AUTH_TOKEN).isNullOrEmpty()
 
     fun saveUser(admin: Admin, authKey: String?) = sessionHelper.apply {
