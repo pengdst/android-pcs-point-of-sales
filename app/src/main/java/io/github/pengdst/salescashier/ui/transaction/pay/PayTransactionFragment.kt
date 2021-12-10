@@ -1,4 +1,4 @@
-package io.github.pengdst.salescashier
+package io.github.pengdst.salescashier.ui.transaction.pay
 
 import android.os.Bundle
 import android.view.LayoutInflater

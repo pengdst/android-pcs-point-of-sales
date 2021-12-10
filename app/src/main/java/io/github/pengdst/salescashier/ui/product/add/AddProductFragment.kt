@@ -1,4 +1,4 @@
-package io.github.pengdst.salescashier
+package io.github.pengdst.salescashier.ui.product.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.github.pengdst.libs.ui.fragment.viewbinding.FragmentViewBindingDelegate.Companion.viewBindings
-import io.github.pengdst.salescashier.databinding.FragmentTransactionBinding
+import io.github.pengdst.salescashier.databinding.FragmentAddProductBinding
 
-class TransactionFragment : Fragment() {
+class AddProductFragment : Fragment() {
 
-    private val binding: FragmentTransactionBinding by viewBindings()
+    private val binding: FragmentAddProductBinding by viewBindings()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
