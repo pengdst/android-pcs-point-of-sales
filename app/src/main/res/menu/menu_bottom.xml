@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/fragmentProduct"
+        android:id="@+id/productFragment"
         android:icon="@drawable/ic_product"
         app:showAsAction="ifRoom"
         android:title="@string/product" />
 
     <item
-        android:id="@+id/fragmentTransaction"
+        android:id="@+id/transactionFragment"
         android:icon="@drawable/ic_transaction"
         app:showAsAction="ifRoom"
         android:title="@string/transaction" />
 
     <item
-        android:id="@+id/fragmentReport"
+        android:id="@+id/reportFragment"
         android:icon="@drawable/ic_report"
         app:showAsAction="ifRoom"
         android:title="@string/report" />
 
     <item
-        android:id="@+id/fragmentAbout"
+        android:id="@+id/aboutFragment"
         android:icon="@drawable/ic_about"
         app:showAsAction="ifRoom"
         android:title="@string/about" />
