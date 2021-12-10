@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/productFragment">
+
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="io.github.pengdst.salescashier.ui.product.add.AddProductFragment"
+        android:label="fragment_add_product"
+        tools:layout="@layout/fragment_add_product" />
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="io.github.pengdst.salescashier.ui.transaction.TransactionFragment"
+        android:label="@string/transaction"
+        tools:layout="@layout/fragment_transaction" />
+    <fragment
+        android:id="@+id/payTransactionFragment"
+        android:name="io.github.pengdst.salescashier.ui.transaction.pay.PayTransactionFragment"
+        android:label="fragment_pay_transaction"
+        tools:layout="@layout/fragment_pay_transaction" />
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="io.github.pengdst.salescashier.ui.product.ProductFragment"
+        android:label="@string/product"
+        tools:layout="@layout/fragment_product" />
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="io.github.pengdst.salescashier.ui.report.ReportFragment"
+        android:label="@string/report"
+        tools:layout="@layout/fragment_report" />
+</navigation>
