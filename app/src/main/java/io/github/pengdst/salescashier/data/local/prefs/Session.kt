@@ -20,4 +20,8 @@ class Session(private val sessionHelper: SessionHelper) {
         nama = sessionHelper.getString(AuthConst.KEY_ID)
     )
 
+    fun logout() {
+        sessionHelper.destroy()
+    }
+
 }
