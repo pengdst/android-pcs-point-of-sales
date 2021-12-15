@@ -50,4 +50,10 @@ interface SalesRoute {
     @GET("product")
     suspend fun getProducts(): Response<SalesResponse<List<Product>>>
 
+    @GET("transaksi")
+    suspend fun getTransactions(): Response<SalesResponse<List<Transaction>>>
+
+    @GET("transaksi/item")
+    suspend fun getTransactionItems(): Response<SalesResponse<List<TransactionItem>>>
+
 }

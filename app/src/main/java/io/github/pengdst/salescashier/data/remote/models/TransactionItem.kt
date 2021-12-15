@@ -16,4 +16,8 @@ data class TransactionItem(
     var subTotal: Int? = null,
     @SerializedName("transaksi_id")
     var transaksiId: Int? = null
-)
+) {
+
+    val priceTotal get() = (hargaSaatTransaksi ?: 0) * (qty ?: 0)
+
+}
