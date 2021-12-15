@@ -21,6 +21,11 @@ interface SalesRoute {
         @Body request: CreateProductRequest
     ): Response<SalesResponse<Product>>
 
+    @DELETE("product/{product_id}")
+    suspend fun deleteProduct(
+        @Path("product_id") productId: Int
+    ): Response<SalesResponse<List<Product>>>
+
     @GET("product")
     suspend fun getProducts(): Response<SalesResponse<List<Product>>>
 

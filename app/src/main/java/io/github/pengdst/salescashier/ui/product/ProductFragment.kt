@@ -1,5 +1,6 @@
 package io.github.pengdst.salescashier.ui.product
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import android.text.style.RelativeSizeSpan
 import android.text.SpannableString
 import android.text.TextUtils
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.github.pengdst.salescashier.R
 
 
@@ -38,6 +40,22 @@ class ProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+
+        productAdapter.setOnItemClickListener { view, model, _ ->
+            when(view.id) {
+                R.id.btn_delete -> MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete Product")
+                    .setMessage("Anda ingin menghapus ${model.nama}?")
+                    .setPositiveButton("Delete"
+                    ) { dialog, _ ->
+                        deleteProduct(model.id ?: -1)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("Cancel"
+                    ) { dialog, _ -> dialog.dismiss() }
+                    .show()
+            }
+        }
         return binding.root
     }
 
@@ -72,6 +90,33 @@ class ProductFragment : Fragment() {
                                     setSpan(RelativeSizeSpan(0.5f), 0, 4, 0)
                                 }
                             )
+                            productAdapter.submitList(products)
+                        }
+                    } else {
+                        val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
+                        withContext(Dispatchers.Main) {
+                            longToast(errorBody.message ?: "Show Products Failed")
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
+    }
+
+    private fun deleteProduct(productId: Int) {
+        lifecycleScope.launchWhenCreated {
+            try {
+                withContext(Dispatchers.IO) {
+                    val response = salesRoute.deleteProduct(productId)
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+
+                        val products = responseBody?.data ?: emptyList()
+
+                        withContext(Dispatchers.Main) {
+                            longToast(responseBody?.message ?: "Show Products Failed")
                             productAdapter.submitList(products)
                         }
                     } else {
