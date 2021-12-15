@@ -21,6 +21,8 @@ import android.text.style.RelativeSizeSpan
 
 import android.text.SpannableString
 import android.text.TextUtils
+import androidx.navigation.fragment.findNavController
+import io.github.pengdst.salescashier.R
 
 
 @AndroidEntryPoint
@@ -42,7 +44,14 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvProducts.adapter = productAdapter
+        with(binding) {
+            rvProducts.adapter = productAdapter
+
+            btnAdd.setOnClickListener {
+                findNavController().navigate(ProductFragmentDirections
+                    .actionProductFragmentToAddProductFragment())
+            }
+        }
 
         getProducts()
     }

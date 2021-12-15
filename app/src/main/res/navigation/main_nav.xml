@@ -24,7 +24,11 @@
         android:id="@+id/productFragment"
         android:name="io.github.pengdst.salescashier.ui.product.ProductFragment"
         android:label="@string/product"
-        tools:layout="@layout/fragment_product" />
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_productFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reportFragment"
         android:name="io.github.pengdst.salescashier.ui.report.ReportFragment"
