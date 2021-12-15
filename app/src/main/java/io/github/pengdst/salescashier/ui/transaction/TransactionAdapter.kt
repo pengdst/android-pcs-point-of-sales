@@ -33,6 +33,10 @@ class TransactionAdapter @Inject constructor() : ListAdapter<TransactionItem, Tr
         holder.bind(getItem(position))
     }
 
+    fun finish(finishedList: (List<TransactionItem>) -> Unit) {
+        finishedList(currentList.filter { it.amount > 0 })
+    }
+
     inner class ViewHolder(private val binding: ItemTransactionBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(transaction: TransactionItem?) {

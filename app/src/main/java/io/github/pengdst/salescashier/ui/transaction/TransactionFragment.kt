@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.pengdst.libs.ui.fragment.viewbinding.FragmentViewBindingDelegate.Companion.viewBindings
 import io.github.pengdst.salescashier.data.remote.responses.ErrorResponse
@@ -42,8 +43,17 @@ class TransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvTotalProduct.text = numberFormat.format(0)
-        binding.rvTransactions.adapter = transactionAdapter
+        with(binding){
+            tvTotalProduct.text = numberFormat.format(0)
+            rvTransactions.adapter = transactionAdapter
+
+            btnPay.setOnClickListener {
+                transactionAdapter.finish {
+                    findNavController().navigate(TransactionFragmentDirections
+                        .actionTransactionFragmentToPayTransactionFragment(it.toTypedArray()))
+                }
+            }
+        }
 
         getProducts()
     }
