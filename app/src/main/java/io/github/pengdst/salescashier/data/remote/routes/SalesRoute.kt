@@ -2,7 +2,11 @@ package io.github.pengdst.salescashier.data.remote.routes
 
 import io.github.pengdst.salescashier.data.remote.models.AuthData
 import io.github.pengdst.salescashier.data.remote.models.Product
+import io.github.pengdst.salescashier.data.remote.models.Transaction
+import io.github.pengdst.salescashier.data.remote.models.TransactionItem
+import io.github.pengdst.salescashier.data.remote.requests.CreateItemTransactionRequest
 import io.github.pengdst.salescashier.data.remote.requests.CreateProductRequest
+import io.github.pengdst.salescashier.data.remote.requests.CreateTransactionRequest
 import io.github.pengdst.salescashier.data.remote.requests.UpdateProductRequest
 import io.github.pengdst.salescashier.data.remote.responses.SalesResponse
 import retrofit2.Response
@@ -21,6 +25,16 @@ interface SalesRoute {
     suspend fun createProduct(
         @Body request: CreateProductRequest
     ): Response<SalesResponse<Product>>
+
+    @POST("transaksi")
+    suspend fun createTransaction(
+        @Body request: CreateTransactionRequest
+    ): Response<SalesResponse<Transaction>>
+
+    @POST("transaksi/item")
+    suspend fun createTransactionItem(
+        @Body request: CreateItemTransactionRequest
+    ): Response<SalesResponse<TransactionItem>>
 
     @PUT("product/{product_id}")
     suspend fun updateProduct(
