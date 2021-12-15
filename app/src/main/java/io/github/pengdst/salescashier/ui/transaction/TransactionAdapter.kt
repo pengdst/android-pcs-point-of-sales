@@ -42,17 +42,21 @@ class TransactionAdapter @Inject constructor() : ListAdapter<TransactionItem, Tr
                 tilAmount.editText?.setText("${transaction?.amount ?: 0}")
 
                 btnIncrease.setOnClickListener {
-                    transaction?.amount = transaction?.amount?.inc() ?: 0
-                    notifyItemChanged(adapterPosition)
+                    val inc = tilAmount.editText?.text.toString().toIntOrNull()?.inc() ?: 0
+                    tilAmount.editText?.setText(inc.toString())
                 }
 
                 btnDecrease.setOnClickListener {
-                    transaction?.amount = transaction?.amount?.dec() ?: 0
-                    notifyItemChanged(adapterPosition)
+                    val dec = tilAmount.editText?.text.toString().toIntOrNull()?.dec() ?: 0
+                    tilAmount.editText?.setText(dec.toString())
                 }
 
-                tilAmount.editText?.doOnTextChanged { _, _, _, _ ->
-                    onChanged?.invoke(currentList)
+                tilAmount.editText?.doOnTextChanged { text, _, _, _ ->
+                    text.toString().toIntOrNull()?.let { amount ->
+                        transaction?.amount = amount
+                        if (amount < 0) tilAmount.editText?.setText("0")
+                        onChanged?.invoke(currentList)
+                    } ?: tilAmount.editText?.setText("0")
                 }
             }
         }
