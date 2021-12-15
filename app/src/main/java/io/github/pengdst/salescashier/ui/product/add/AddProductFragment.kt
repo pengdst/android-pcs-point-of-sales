@@ -97,7 +97,7 @@ class AddProductFragment : Fragment() {
                     } else {
                         val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
                         withContext(Dispatchers.Main) {
-                            longToast(errorBody.message ?: "Show Products Failed")
+                            longToast(errorBody.message ?: "Create Product Failed")
                         }
                     }
                 }
@@ -118,13 +118,13 @@ class AddProductFragment : Fragment() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         withContext(Dispatchers.Main) {
-                            shortToast(responseBody?.message ?: "Create Product Success")
+                            shortToast(responseBody?.message ?: "Update Product Success")
                             requireActivity().onBackPressed()
                         }
                     } else {
                         val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
                         withContext(Dispatchers.Main) {
-                            longToast(errorBody.message ?: "Show Products Failed")
+                            longToast(errorBody.message ?: "Update Product Failed")
                         }
                     }
                 }

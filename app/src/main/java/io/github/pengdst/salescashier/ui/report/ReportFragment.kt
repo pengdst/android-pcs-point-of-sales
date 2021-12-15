@@ -86,7 +86,7 @@ class ReportFragment : Fragment() {
                     } else {
                         val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
                         withContext(Dispatchers.Main) {
-                            longToast(errorBody.message ?: "Show Products Failed")
+                            longToast(errorBody.message ?: "Show Transactions Failed")
                         }
                     }
                 }
@@ -105,7 +105,7 @@ class ReportFragment : Fragment() {
         } else {
             val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
             withContext(Dispatchers.Main) {
-                longToast(errorBody.message ?: "Show Products Failed")
+                longToast(errorBody.message ?: "Show Transaction Items Failed")
             }
         }
         return emptyList()
