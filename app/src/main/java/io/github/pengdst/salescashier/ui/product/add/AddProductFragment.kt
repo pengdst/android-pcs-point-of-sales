@@ -53,7 +53,7 @@ class AddProductFragment : Fragment() {
                         adminId = session.getAuthUser().id,
                         harga = tilPrice.editText?.text.toString().toIntOrNull(),
                         nama = tilName.editText?.text.toString().trim(),
-                        stock = 20
+                        stock = tilStock.editText?.text.toString().toIntOrNull()
                     )
                     createProduct(request)
                 }
@@ -62,7 +62,7 @@ class AddProductFragment : Fragment() {
                         adminId = session.getAuthUser().id,
                         harga = tilPrice.editText?.text.toString().toIntOrNull(),
                         nama = tilName.editText?.text.toString().trim(),
-                        stock = 20
+                        stock = tilStock.editText?.text.toString().toIntOrNull()
                     )
                     updateProduct(args.product?.id, request)
                 }
@@ -75,6 +75,7 @@ class AddProductFragment : Fragment() {
             with(binding) {
                 tilName.editText?.setText(it.nama)
                 tilPrice.editText?.setText(it.harga?.toInt().toString())
+                tilStock.editText?.setText(it.stock?.toInt().toString())
 
                 btnSave.text = getString(R.string.save)
             }
