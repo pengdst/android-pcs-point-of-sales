@@ -96,7 +96,7 @@ class PayTransactionFragment : Fragment() {
                     } else {
                         val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
                         withContext(Dispatchers.Main) {
-                            longToast(errorBody.message ?: "Show Products Failed")
+                            longToast(errorBody.message ?: "Create Transaction Failed")
                         }
                     }
                 }
@@ -130,7 +130,7 @@ class PayTransactionFragment : Fragment() {
                         } else {
                             val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
                             withContext(Dispatchers.Main) {
-                                longToast(errorBody.message ?: "Show Products Failed")
+                                longToast(errorBody.message ?: "Create Transaction Item Failed")
                             }
                         }
                     }
