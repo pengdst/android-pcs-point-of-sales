@@ -33,14 +33,18 @@ class ProductAdapter @Inject constructor() : BaseAdapter.Listadapter<Product, Pr
 
     inner class ViewHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(product: Product?) {
+        fun bind(product: Product) {
             with(binding) {
-                tvTitle.text = product?.nama
-                tvPrice.text = numberFormat.format(product?.harga)
+                tvTitle.text = product.nama
+                tvPrice.text = numberFormat.format(product.harga)
 
                 onItemClickCallback?.let { clickCallback ->
                     btnDelete.setOnClickListener {
-                        clickCallback.onItemClick(it, product ?: return@setOnClickListener, adapterPosition)
+                        clickCallback.onItemClick(it, product, adapterPosition)
+                    }
+
+                    itemView.setOnClickListener {
+                        clickCallback.onItemClick(it, product, adapterPosition)
                     }
                 }
             }

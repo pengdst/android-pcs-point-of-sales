@@ -51,6 +51,9 @@ class ProductFragment : Fragment() {
                     .setNegativeButton("Cancel"
                     ) { dialog, _ -> dialog.dismiss() }
                     .show()
+                else -> {
+                    findNavController().navigate(ProductFragmentDirections.actionProductFragmentToAddProductFragment(model))
+                }
             }
         }
         return binding.root

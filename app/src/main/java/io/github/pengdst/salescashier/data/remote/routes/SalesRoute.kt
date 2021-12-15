@@ -3,6 +3,7 @@ package io.github.pengdst.salescashier.data.remote.routes
 import io.github.pengdst.salescashier.data.remote.models.AuthData
 import io.github.pengdst.salescashier.data.remote.models.Product
 import io.github.pengdst.salescashier.data.remote.requests.CreateProductRequest
+import io.github.pengdst.salescashier.data.remote.requests.UpdateProductRequest
 import io.github.pengdst.salescashier.data.remote.responses.SalesResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -19,6 +20,12 @@ interface SalesRoute {
     @POST("product")
     suspend fun createProduct(
         @Body request: CreateProductRequest
+    ): Response<SalesResponse<Product>>
+
+    @PUT("product/{product_id}")
+    suspend fun updateProduct(
+        @Path("product_id") productId: Int?,
+        @Body request: UpdateProductRequest
     ): Response<SalesResponse<Product>>
 
     @DELETE("product/{product_id}")
