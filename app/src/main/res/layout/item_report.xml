@@ -18,7 +18,7 @@
         android:textColor="?colorOnBackground"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_amount"
+        app:layout_constraintBottom_toTopOf="@+id/tv_struct_id"
         app:layout_constraintEnd_toStartOf="@+id/tv_total_income"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         tools:text="18 September 2021" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_amount"
+        android:id="@+id/tv_struct_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_amount"
+        app:layout_constraintStart_toEndOf="@+id/tv_struct_id"
         app:layout_constraintTop_toBottomOf="@+id/tv_date"
         app:layout_constraintVertical_bias="1.0"
         tools:text="Rp 0" />
