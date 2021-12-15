@@ -19,7 +19,7 @@ class Session(private val sessionHelper: SessionHelper) {
     fun getAuthUser() = Admin(
         id = sessionHelper.getInt(AuthConst.KEY_ID),
         email = sessionHelper.getString(AuthConst.KEY_EMAIL),
-        nama = sessionHelper.getString(AuthConst.KEY_ID)
+        nama = sessionHelper.getString(AuthConst.KEY_NAME)
     )
 
     fun logout() {
