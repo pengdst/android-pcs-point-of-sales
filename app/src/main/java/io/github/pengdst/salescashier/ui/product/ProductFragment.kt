@@ -1,14 +1,19 @@
 package io.github.pengdst.salescashier.ui.product
 
-import android.content.DialogInterface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.pengdst.libs.ui.fragment.viewbinding.FragmentViewBindingDelegate.Companion.viewBindings
+import io.github.pengdst.salescashier.R
 import io.github.pengdst.salescashier.data.remote.responses.ErrorResponse
 import io.github.pengdst.salescashier.data.remote.routes.SalesRoute
 import io.github.pengdst.salescashier.databinding.FragmentProductBinding
@@ -17,14 +22,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
-
-import android.text.style.RelativeSizeSpan
-
-import android.text.SpannableString
-import android.text.TextUtils
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.github.pengdst.salescashier.R
 
 
 @AndroidEntryPoint
