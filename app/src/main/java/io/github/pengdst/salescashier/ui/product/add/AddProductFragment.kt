@@ -75,7 +75,7 @@ class AddProductFragment : Fragment() {
             with(binding) {
                 tilName.editText?.setText(it.nama)
                 tilPrice.editText?.setText(it.harga?.toInt().toString())
-                tilStock.editText?.setText(it.stock?.toInt().toString())
+                tilStock.editText?.setText(it.stock.toString())
 
                 btnSave.text = getString(R.string.save)
             }
