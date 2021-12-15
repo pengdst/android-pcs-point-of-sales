@@ -3,14 +3,14 @@ package io.github.pengdst.salescashier.ui.product
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import io.github.pengdst.salescashier.base.BaseAdapter
 import io.github.pengdst.salescashier.data.remote.models.Product
 import io.github.pengdst.salescashier.databinding.ItemProductBinding
 import java.text.NumberFormat
 import javax.inject.Inject
 
-class ProductAdapter @Inject constructor() : ListAdapter<Product, ProductAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Product>() {
+class ProductAdapter @Inject constructor() : BaseAdapter.Listadapter<Product, ProductAdapter.ViewHolder>(object : DiffUtil.ItemCallback<Product>() {
     override fun areItemsTheSame(oldItem: Product, newItem: Product) =
         oldItem.hashCode() == newItem.hashCode()
 
@@ -37,6 +37,12 @@ class ProductAdapter @Inject constructor() : ListAdapter<Product, ProductAdapter
             with(binding) {
                 tvTitle.text = product?.nama
                 tvPrice.text = numberFormat.format(product?.harga)
+
+                onItemClickCallback?.let { clickCallback ->
+                    btnDelete.setOnClickListener {
+                        clickCallback.onItemClick(it, product ?: return@setOnClickListener, adapterPosition)
+                    }
+                }
             }
         }
 
