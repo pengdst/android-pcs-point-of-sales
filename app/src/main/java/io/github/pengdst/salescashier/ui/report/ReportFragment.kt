@@ -74,7 +74,6 @@ class ReportFragment : Fragment() {
                                     val calendar = Calendar.getInstance()
                                     val currentMonth = calendar[Calendar.MONTH]
                                     calendar.timeInMillis = it.date.time
-                                    Timber.e("getTransaction() ${currentMonth} == ${calendar[Calendar.MONTH]} called")
                                     currentMonth == calendar[Calendar.MONTH]
                                 }.sumOf {
                                     it.items.sumOf {
