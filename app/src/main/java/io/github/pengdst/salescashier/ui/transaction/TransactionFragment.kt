@@ -42,6 +42,7 @@ class TransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvTotalProduct.text = numberFormat.format(0)
         binding.rvTransactions.adapter = transactionAdapter
 
         getProducts()

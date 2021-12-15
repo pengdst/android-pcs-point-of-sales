@@ -62,6 +62,11 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvTotalProduct.text = TextUtils.concat("0", " ",
+            SpannableString("ITEM").apply {
+                setSpan(RelativeSizeSpan(0.5f), 0, 4, 0)
+            }
+        )
         with(binding) {
             rvProducts.adapter = productAdapter
 
