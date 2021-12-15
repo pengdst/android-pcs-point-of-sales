@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.pengdst.salescashier.BuildConfig
 import io.github.pengdst.salescashier.R
 import io.github.pengdst.salescashier.data.local.prefs.Session
 import io.github.pengdst.salescashier.data.local.prefs.SessionHelper
@@ -17,6 +18,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import timber.log.Timber
 import java.text.NumberFormat
 import java.util.*
 
@@ -27,11 +30,20 @@ object AppComponent {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(session: Session) = OkHttpClient.Builder().addInterceptor { chain ->
+    fun provideLoggingInterceptor() = HttpLoggingInterceptor { message -> Timber.e(message) }.apply {
+        setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(session: Session, loggingInterceptor: HttpLoggingInterceptor) = OkHttpClient.Builder().addInterceptor { chain ->
         val newRequest = chain.request().newBuilder().apply {
             if (session.isLogin()) addHeader("Authorization", "Bearer ${session.token}")
         }.build()
         chain.proceed(newRequest)
+    }.apply {
+        if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
     }.build()
 
     @Provides
