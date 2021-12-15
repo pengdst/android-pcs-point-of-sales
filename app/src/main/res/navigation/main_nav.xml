@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/addProductFragment"
         android:name="io.github.pengdst.salescashier.ui.product.add.AddProductFragment"
-        android:label="fragment_add_product"
-        tools:layout="@layout/fragment_add_product" >
+        android:label="@string/product"
+        tools:layout="@layout/fragment_add_product">
         <argument
             android:name="product"
+            android:defaultValue="@null"
             app:argType="io.github.pengdst.salescashier.data.remote.models.Product"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/transactionFragment"
@@ -28,8 +28,8 @@
     <fragment
         android:id="@+id/payTransactionFragment"
         android:name="io.github.pengdst.salescashier.ui.transaction.pay.PayTransactionFragment"
-        android:label="fragment_pay_transaction"
-        tools:layout="@layout/fragment_pay_transaction" >
+        android:label="@string/pay"
+        tools:layout="@layout/fragment_pay_transaction">
         <argument
             android:name="productTransactions"
             app:argType="io.github.pengdst.salescashier.ui.transaction.TransactionItem[]" />
@@ -51,6 +51,6 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="io.github.pengdst.salescashier.ui.about.AboutFragment"
-        android:label="fragment_about"
+        android:label="@string/about"
         tools:layout="@layout/fragment_about" />
 </navigation>
