@@ -52,21 +52,6 @@ class MainActivity : AppCompatActivity() {
                 )
             ))
             bottomNav.setupWithNavController(navController)
-
-            toolbar.setOnMenuItemClickListener {
-                when(it.itemId) {
-                    R.id.menu_logout -> {
-                        session.logout()
-                        startActivity(Intent(applicationContext, LoginActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        }).also {
-                            finish()
-                        }
-                        true
-                    }
-                    else -> false
-                }
-            }
         }
     }
 }
