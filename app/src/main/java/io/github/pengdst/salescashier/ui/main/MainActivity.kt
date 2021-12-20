@@ -13,6 +13,7 @@ import io.github.pengdst.salescashier.R
 import io.github.pengdst.salescashier.data.local.prefs.Session
 import io.github.pengdst.salescashier.databinding.ActivityMainBinding
 import io.github.pengdst.salescashier.ui.login.LoginActivity
+import io.github.pengdst.salescashier.utils.setupWithNavController
 import javax.inject.Inject
 
 @AndroidEntryPoint
