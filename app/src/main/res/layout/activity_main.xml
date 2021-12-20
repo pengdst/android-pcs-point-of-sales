@@ -56,11 +56,12 @@
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
+            android:background="?colorAccent"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             app:cnb_menuResource="@menu/menu_bottom"
             app:cnb_orientationMode="horizontal"
+            app:cnb_unselectedColor="?colorOnPrimarySurface"
             app:cnb_iconSize="24dp"
             app:cnb_addLeftInset="true"
             app:cnb_addRightInset="true" />

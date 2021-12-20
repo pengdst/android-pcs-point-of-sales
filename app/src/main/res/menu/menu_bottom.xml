@@ -6,28 +6,28 @@
         android:id="@+id/productFragment"
         android:icon="@drawable/ic_product"
         app:showAsAction="ifRoom"
-        app:cnb_iconColor="?colorPrimary"
+        app:cnb_iconColor="?colorOnPrimarySurface"
         android:title="@string/product" />
 
     <item
         android:id="@+id/transactionFragment"
         android:icon="@drawable/ic_transaction"
         app:showAsAction="ifRoom"
-        app:cnb_iconColor="?colorPrimaryDark"
+        app:cnb_iconColor="?colorOnPrimarySurface"
         android:title="@string/transaction" />
 
     <item
         android:id="@+id/reportFragment"
         android:icon="@drawable/ic_report"
         app:showAsAction="ifRoom"
-        app:cnb_iconColor="?colorSecondaryVariant"
+        app:cnb_iconColor="?colorOnPrimarySurface"
         android:title="@string/report" />
 
     <item
         android:id="@+id/aboutFragment"
         android:icon="@drawable/ic_about"
         app:showAsAction="ifRoom"
-        app:cnb_iconColor="?colorError"
+        app:cnb_iconColor="?colorOnPrimarySurface"
         android:title="@string/about" />
 
 </menu>
