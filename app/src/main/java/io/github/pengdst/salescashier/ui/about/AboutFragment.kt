@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.pengdst.libs.ui.fragment.viewbinding.FragmentViewBindingDelegate.Companion.viewBindings
 import io.github.pengdst.salescashier.data.local.prefs.Session
@@ -34,12 +35,20 @@ class AboutFragment : Fragment() {
 
         with(binding) {
             btnLogout.setOnClickListener {
-                session.logout()
-                startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                }).also {
-                    requireActivity().finish()
-                }
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Logout Account")
+                    .setMessage("Are you sure Logout your account?")
+                    .setPositiveButton("Logout") { _, _ ->
+                        session.logout()
+                        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        }).also {
+                            requireActivity().finish()
+                        }
+                    }
+                    .setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.dismiss()
+                    }.show()
             }
         }
     }
