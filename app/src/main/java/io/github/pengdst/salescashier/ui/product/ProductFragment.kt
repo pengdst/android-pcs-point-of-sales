@@ -8,35 +8,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.pengdst.libs.ui.fragment.viewbinding.FragmentViewBindingDelegate.Companion.viewBindings
 import io.github.pengdst.salescashier.R
-import io.github.pengdst.salescashier.data.remote.responses.ErrorResponse
-import io.github.pengdst.salescashier.data.remote.routes.SalesRoute
+import io.github.pengdst.salescashier.data.remote.models.Product
 import io.github.pengdst.salescashier.databinding.FragmentProductBinding
 import io.github.pengdst.salescashier.utils.longToast
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class ProductFragment : Fragment() {
 
     private val binding: FragmentProductBinding by viewBindings()
+    private val productViewModel: ProductViewModel by viewModels()
 
     @Inject lateinit var productAdapter: ProductAdapter
-    @Inject lateinit var salesRoute: SalesRoute
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+
+        productViewModel.productsViewModel.observe(viewLifecycleOwner) {
+            when(it) {
+                is ProductViewModel.State.Failed -> longToast(it.message)
+                is ProductViewModel.State.Loading -> Unit
+                is ProductViewModel.State.Success -> updateProducts(it.data)
+                is ProductViewModel.State.SuccessDelete -> updateProducts(it.data)
+            }
+        }
 
         productAdapter.setOnItemClickListener { view, model, _ ->
             when(view.id) {
@@ -45,7 +49,7 @@ class ProductFragment : Fragment() {
                     .setMessage("Anda ingin menghapus ${model.nama}?")
                     .setPositiveButton("Delete"
                     ) { dialog, _ ->
-                        deleteProduct(model.id ?: -1)
+                        productViewModel.deleteProduct(model.id ?: -1)
                         dialog.dismiss()
                     }
                     .setNegativeButton("Cancel"
@@ -76,64 +80,15 @@ class ProductFragment : Fragment() {
             }
         }
 
-        getProducts()
+        productViewModel.getProducts()
     }
 
-    private fun getProducts() {
-        lifecycleScope.launchWhenCreated {
-            try {
-                withContext(Dispatchers.IO) {
-                    val response = salesRoute.getProducts()
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-
-                        val products = responseBody?.data ?: emptyList()
-
-                        withContext(Dispatchers.Main) {
-                            binding.tvTotalProduct.text = TextUtils.concat(products.size.toString(), " ",
-                                SpannableString("ITEM").apply {
-                                    setSpan(RelativeSizeSpan(0.5f), 0, 4, 0)
-                                }
-                            )
-                            productAdapter.submitList(products)
-                        }
-                    } else {
-                        val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
-                        withContext(Dispatchers.Main) {
-                            longToast(errorBody.message ?: "Show Products Failed")
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Timber.e(e)
+    private fun updateProducts(products: List<Product>) {
+        binding.tvTotalProduct.text = TextUtils.concat(products.size.toString(), " ",
+            SpannableString("ITEM").apply {
+                setSpan(RelativeSizeSpan(0.5f), 0, 4, 0)
             }
-        }
-    }
-
-    private fun deleteProduct(productId: Int) {
-        lifecycleScope.launchWhenCreated {
-            try {
-                withContext(Dispatchers.IO) {
-                    val response = salesRoute.deleteProduct(productId)
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-
-                        val products = responseBody?.data ?: emptyList()
-
-                        withContext(Dispatchers.Main) {
-                            longToast(responseBody?.message ?: "Show Products Failed")
-                            productAdapter.submitList(products)
-                        }
-                    } else {
-                        val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
-                        withContext(Dispatchers.Main) {
-                            longToast(errorBody.message ?: "Show Products Failed")
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-        }
+        )
+        productAdapter.submitList(products)
     }
 }
