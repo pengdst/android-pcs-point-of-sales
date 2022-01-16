@@ -23,7 +23,7 @@ class SalesRepository @Inject constructor(
             val loginData = responseBody?.data ?: return@safeApiCall ResultWrapper.Error(data = responseBody?.data?.admin, message = message)
 
             val admin = loginData.admin ?: return@safeApiCall ResultWrapper.Error(
-                data = responseBody?.data?.admin,
+                data = responseBody.data.admin,
                 message = message
             )
             session.saveUser(admin, loginData.token)
@@ -33,6 +33,38 @@ class SalesRepository @Inject constructor(
         } else {
             val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
             ResultWrapper.Error(data = response.body()?.data?.admin, message = errorBody.message ?: message)
+        }
+    }
+
+    suspend fun getProducts() = safeApiCall {
+        val response = salesRoute.getProducts()
+        var message = "Unknown Error"
+        if (response.isSuccessful) {
+            val responseBody = response.body()
+
+            val products = responseBody?.data ?: emptyList()
+
+            message = responseBody?.message ?: "Get Products Success"
+            ResultWrapper.Success(data = products, message = message)
+        } else {
+            val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
+            ResultWrapper.Error(data = response.body()?.data, message = errorBody.message ?: message)
+        }
+    }
+
+    suspend fun deleteProduct(productId: Int) = safeApiCall {
+        val response = salesRoute.deleteProduct(productId)
+        var message = "Unknown Error"
+        if (response.isSuccessful) {
+            val responseBody = response.body()
+
+            val products = responseBody?.data ?: emptyList()
+
+            message = responseBody?.message ?: "Delete Products Success"
+            ResultWrapper.Success(data = products, message = message)
+        } else {
+            val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
+            ResultWrapper.Error(data = response.body()?.data, message = errorBody.message ?: message)
         }
     }
 }
