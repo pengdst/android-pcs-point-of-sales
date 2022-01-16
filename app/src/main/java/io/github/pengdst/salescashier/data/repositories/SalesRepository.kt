@@ -77,6 +77,7 @@ class SalesRepository @Inject constructor(
     }
 
     suspend fun createProduct(request: CreateProductRequest) = safeApiCall {
+        request.adminId = session.getAuthUser().id
         val response = salesRoute.createProduct(request)
         var message = "Unknown Error"
         if (response.isSuccessful) {
@@ -94,6 +95,7 @@ class SalesRepository @Inject constructor(
     }
 
     suspend fun updateProduct(productId: Int?, request: UpdateProductRequest) = safeApiCall {
+        request.adminId = session.getAuthUser().id
         val response = salesRoute.updateProduct(productId, request)
         var message = "Unknown Error"
         if (response.isSuccessful) {
