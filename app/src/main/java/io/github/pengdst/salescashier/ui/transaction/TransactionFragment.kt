@@ -42,6 +42,7 @@ class TransactionFragment : Fragment() {
         }
 
         transactionAdapter.onChanged = { transactions ->
+            binding.btnPay.isEnabled = transactions.sumOf { it.amount * (it.product.harga ?: 0.0) } > 0
             binding.tvTotalProduct.text = numberFormat.format(transactions.sumOf { it.amount * (it.product.harga ?: 0.0) })
         }
 
@@ -55,6 +56,7 @@ class TransactionFragment : Fragment() {
             tvTotalProduct.text = numberFormat.format(0)
             rvTransactions.adapter = transactionAdapter
 
+            btnPay.isEnabled = transactionAdapter.currentList.sumOf { it.amount * (it.product.harga ?: 0.0) } > 0
             btnPay.setOnClickListener {
                 transactionAdapter.finish {
                     findNavController().navigate(TransactionFragmentDirections
