@@ -33,6 +33,7 @@
                 android:paddingEnd="24dp"
                 android:text="@string/pay"
                 android:textAllCaps="false"
+                app:backgroundTint="@color/pay_button"
                 app:cornerRadius="16dp"
                 app:icon="@drawable/ic_payment"
                 app:layout_constraintBottom_toBottomOf="parent"
