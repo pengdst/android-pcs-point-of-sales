@@ -1,19 +1,15 @@
 package io.github.pengdst.salescashier.data.repositories
 
-import androidx.lifecycle.lifecycleScope
 import io.github.pengdst.salescashier.data.local.prefs.Session
 import io.github.pengdst.salescashier.data.remote.models.Admin
+import io.github.pengdst.salescashier.data.remote.requests.CreateItemTransactionRequest
 import io.github.pengdst.salescashier.data.remote.requests.CreateProductRequest
+import io.github.pengdst.salescashier.data.remote.requests.CreateTransactionRequest
 import io.github.pengdst.salescashier.data.remote.requests.UpdateProductRequest
 import io.github.pengdst.salescashier.data.remote.responses.ErrorResponse
 import io.github.pengdst.salescashier.data.remote.routes.SalesRoute
 import io.github.pengdst.salescashier.data.vo.ResultWrapper
-import io.github.pengdst.salescashier.utils.longToast
 import io.github.pengdst.salescashier.utils.safeApiCall
-import io.github.pengdst.salescashier.utils.shortToast
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 class SalesRepository @Inject constructor(
@@ -106,6 +102,41 @@ class SalesRepository @Inject constructor(
 
             message = responseBody.message ?: "Update Product Success"
             ResultWrapper.Success(data = product, message = message)
+        } else {
+            val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
+            ResultWrapper.Error(data = response.body()?.data, message = errorBody.message ?: message)
+        }
+    }
+
+    suspend fun payTransaction(request: CreateTransactionRequest) = safeApiCall {
+        request.adminId = session.getAuthUser().id
+        val response = salesRoute.createTransaction(request)
+        var message = "Unknown Error"
+        if (response.isSuccessful) {
+            val responseBody = response.body()
+
+            message = responseBody?.message ?: message
+            val transaction = responseBody?.data ?: return@safeApiCall ResultWrapper.Error(data = responseBody?.data, message = message)
+
+            message = responseBody.message ?: "Pay Transaction Success"
+            ResultWrapper.Success(data = transaction, message = message)
+        } else {
+            val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
+            ResultWrapper.Error(data = response.body()?.data, message = errorBody.message ?: message)
+        }
+    }
+
+    suspend fun createTransactionItem(request: CreateItemTransactionRequest) = safeApiCall {
+        val response = salesRoute.createTransactionItem(request)
+        var message = "Unknown Error"
+        if (response.isSuccessful) {
+            val responseBody = response.body()
+
+            message = responseBody?.message ?: message
+            val transactionItem = responseBody?.data ?: return@safeApiCall ResultWrapper.Error(data = responseBody?.data, message = message)
+
+            message = responseBody.message ?: "Create Transaction Success"
+            ResultWrapper.Success(data = transactionItem, message = message)
         } else {
             val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
             ResultWrapper.Error(data = response.body()?.data, message = errorBody.message ?: message)
