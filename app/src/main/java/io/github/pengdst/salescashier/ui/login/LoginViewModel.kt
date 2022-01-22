@@ -22,8 +22,8 @@ class LoginViewModel @Inject constructor(
         _loginViewModel.postValue(State.Loading)
         viewModelScope.launch {
             when(val res = repository.login(email, password)) {
-                is ResultWrapper.Error -> _loginViewModel.value = State.Success(res.message)
-                is ResultWrapper.Success -> _loginViewModel.value = State.Failed(res.message)
+                is ResultWrapper.Success -> _loginViewModel.value = State.Success(res.message)
+                is ResultWrapper.Error -> _loginViewModel.value = State.Failed(res.message)
             }
         }
     }

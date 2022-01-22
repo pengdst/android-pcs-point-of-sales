@@ -23,8 +23,8 @@ class ProductViewModel @Inject constructor(
             _productsViewModel.postValue(State.Loading)
             viewModelScope.launch {
                 when(val res = repository.getProducts()) {
-                    is ResultWrapper.Error -> _productsViewModel.value = State.Success(res.data ?: emptyList(), res.message)
-                    is ResultWrapper.Success -> _productsViewModel.value = State.Failed(res.message)
+                    is ResultWrapper.Success -> _productsViewModel.value = State.Success(res.data, res.message)
+                    is ResultWrapper.Error -> _productsViewModel.value = State.Failed(res.message)
                 }
             }
         }
@@ -35,8 +35,8 @@ class ProductViewModel @Inject constructor(
             _productsViewModel.postValue(State.Loading)
             viewModelScope.launch {
                 when(val res = repository.deleteProduct(productId)) {
-                    is ResultWrapper.Error -> _productsViewModel.value = State.SuccessDelete(res.data ?: emptyList(), res.message)
-                    is ResultWrapper.Success -> _productsViewModel.value = State.Failed(res.message)
+                    is ResultWrapper.Success -> _productsViewModel.value = State.SuccessDelete(res.data, res.message)
+                    is ResultWrapper.Error -> _productsViewModel.value = State.Failed(res.message)
                 }
             }
         }
@@ -46,8 +46,8 @@ class ProductViewModel @Inject constructor(
         _productsViewModel.postValue(State.Loading)
         viewModelScope.launch {
             when(val res = repository.createProduct(request)) {
-                is ResultWrapper.Error -> _productsViewModel.value = State.SuccessCreate(res.data ?: return@launch, res.message)
-                is ResultWrapper.Success -> _productsViewModel.value = State.Failed(res.message)
+                is ResultWrapper.Success -> _productsViewModel.value = State.SuccessCreate(res.data, res.message)
+                is ResultWrapper.Error -> _productsViewModel.value = State.Failed(res.message)
             }
         }
     }
@@ -56,8 +56,8 @@ class ProductViewModel @Inject constructor(
         _productsViewModel.postValue(State.Loading)
         viewModelScope.launch {
             when(val res = repository.updateProduct(productId, request)) {
-                is ResultWrapper.Error -> _productsViewModel.value = State.SuccessUpdate(res.data ?: return@launch, res.message)
-                is ResultWrapper.Success -> _productsViewModel.value = State.Failed(res.message)
+                is ResultWrapper.Success -> _productsViewModel.value = State.SuccessUpdate(res.data, res.message)
+                is ResultWrapper.Error -> _productsViewModel.value = State.Failed(res.message)
             }
         }
     }
