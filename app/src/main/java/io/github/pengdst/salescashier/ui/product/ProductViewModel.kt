@@ -1,6 +1,7 @@
 package io.github.pengdst.salescashier.ui.product
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.pengdst.salescashier.data.remote.models.Product
 import io.github.pengdst.salescashier.data.remote.requests.CreateProductRequest
 import io.github.pengdst.salescashier.data.remote.requests.UpdateProductRequest
@@ -9,6 +10,7 @@ import io.github.pengdst.salescashier.data.vo.ResultWrapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ProductViewModel @Inject constructor(
     private val repository: SalesRepository
 ) : ViewModel() {
