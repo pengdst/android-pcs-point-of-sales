@@ -42,12 +42,12 @@ class PayTransactionFragment : Fragment() {
         // Inflate the layout for this fragment
         transactionViewModel.productsViewModel.observe(viewLifecycleOwner) {
             when(it) {
-                is TransactionViewModel.State.Loading -> {
-
+                is TransactionViewModel.State.Loading -> Unit
+                is TransactionViewModel.State.SuccessCreateItem -> shortToast(it.message)
+                is TransactionViewModel.State.SuccessPayTransaction -> {
+                    shortToast(it.message)
                     requireActivity().onBackPressed()
                 }
-                is TransactionViewModel.State.SuccessCreateItem -> shortToast(it.message)
-                is TransactionViewModel.State.SuccessPayTransaction -> shortToast(it.message)
                 is TransactionViewModel.State.Failed -> longToast(it.message)
             }
         }
