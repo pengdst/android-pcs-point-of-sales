@@ -34,6 +34,9 @@ class AboutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            tvName.text = session.getAuthUser().nama
+            tvEmail.text = session.getAuthUser().email
+
             btnLogout.setOnClickListener {
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Logout Account")
