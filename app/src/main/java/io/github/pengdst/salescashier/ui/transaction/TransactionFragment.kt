@@ -5,17 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.pengdst.libs.ui.fragment.viewbinding.FragmentViewBindingDelegate.Companion.viewBindings
-import io.github.pengdst.salescashier.data.remote.responses.ErrorResponse
-import io.github.pengdst.salescashier.data.remote.routes.SalesRoute
+import io.github.pengdst.salescashier.data.remote.models.Product
 import io.github.pengdst.salescashier.databinding.FragmentTransactionBinding
+import io.github.pengdst.salescashier.ui.product.ProductViewModel
 import io.github.pengdst.salescashier.utils.longToast
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.text.NumberFormat
 import javax.inject.Inject
 
@@ -26,12 +23,23 @@ class TransactionFragment : Fragment() {
 
     @Inject lateinit var transactionAdapter: TransactionAdapter
     @Inject lateinit var numberFormat: NumberFormat
-    @Inject lateinit var salesRoute: SalesRoute
+    private val productViewModel: ProductViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        productViewModel.productsViewModel.observe(viewLifecycleOwner) {
+            when(it) {
+                is ProductViewModel.State.Failed -> longToast(it.message)
+                is ProductViewModel.State.Success -> updateProducts(it.data)
+                is ProductViewModel.State.Loading -> Unit
+                is ProductViewModel.State.SuccessCreate -> Unit
+                is ProductViewModel.State.SuccessDelete -> Unit
+                is ProductViewModel.State.SuccessUpdate -> Unit
+            }
+        }
 
         transactionAdapter.onChanged = { transactions ->
             binding.tvTotalProduct.text = numberFormat.format(transactions.sumOf { it.amount * (it.product.harga ?: 0.0) })
@@ -55,33 +63,11 @@ class TransactionFragment : Fragment() {
             }
         }
 
-        getProducts()
+        productViewModel.getProducts()
     }
 
-    private fun getProducts() {
-        lifecycleScope.launchWhenCreated {
-            try {
-                withContext(Dispatchers.IO) {
-                    val response = salesRoute.getProducts()
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-
-                        val products = responseBody?.data ?: emptyList()
-
-                        withContext(Dispatchers.Main) {
-                            binding.tvTotalProduct.text = numberFormat.format(0)
-                            transactionAdapter.submitList(products.map { TransactionItem(it) })
-                        }
-                    } else {
-                        val errorBody = ErrorResponse.fromErrorBody(response.errorBody())
-                        withContext(Dispatchers.Main) {
-                            longToast(errorBody.message ?: "Show Products Failed")
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-        }
+    private fun updateProducts(products: List<Product>) {
+        binding.tvTotalProduct.text = numberFormat.format(0)
+        transactionAdapter.submitList(products.map { TransactionItem(it) })
     }
 }
